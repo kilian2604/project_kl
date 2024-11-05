@@ -1,0 +1,88 @@
+102 camera trap projects, 21 countries predominatly EU, NA
+
+between year - within-year comparison
+5400 locations, 311.208 camera days nefore and during pandemic
+
+sites with change in human activity to mimic human presence
+
+163 mammal species
+
+meta analytic, mixed effect model: species traits, landsacape modification, site characteristics, change in human activity
+
+human activity: 100 fold decrease -> 10 fold increase
+
+
+Results:
+1,065 responses: one per species per project
+
+overall mean change: near-zero, -0.04
+
+trophic group (combining body mass and trophic level) as strongest predictor for change in animal activvity in response to human activity
+
+largest increase: large herbivore; strongest decrease: carnivore
+
+animal activity in higher human acitivity area increases with human activity - species filter: gulo gulo is absent from sites with high modification; 
+
+timing:
+more nocturnatility as human acitivity increases
+strongest predictor: human landscape modification index
+large carnivore: notabky more nocturnal than other groups
+hunted animals are more nocturnal than unhunted ones, especially the more human activity
+
+animals being attracted to anthropogenic ressources, nocturnal to minimize encounters
+
+methods:
+call for standardized images
+script:
+	traps are situated in COVID-19 affected area
+	minimum of 7 cameras sampled
+	min 7 days per camera
+	human activity: trend recorded from camera or lockdown data avaible (local knowledge??)
+
+detections: animals >= 1kg
+no local animals (database)
+
+mean: 42 (6-300) cameras per project
+
+camera locations were cnsidered indepenedent within projects (no paired camera, suppl tab 10)
+
+experimental design:
+human activity: independent, if > 30min from previous detection
+-> trend for one location / sampling effort(?)
+-> variation -> control and treatment, less and more human activity, regardless of covid 19
+
+start and end date of each period: visual detection on daily level or local lockdowns
+
+priotized: between year analysis for similar period before 2020 (95 projects); if not avaible: onset of lockdowns march 2020 (dates chosen according to regulations)
+if several potential treatments: (1) the fewest seasonal or ecological confounds; (2) the most similar study design; (3) the greatest sampling effort; and (4) the most recent time period. Of the 95 projects for which we made comparisons between 2020 and a previous year, we used 2019 for 88 projects, 2018 for 6 and 2017 for 1.
+
+if not sifficient data: local knowledge of human activities (lockdown dates, visitor daata)
+
+--> final categoriztion shared with contributors, asked for confounding factors (env. variation eg fire, drought...) 
+-> 102 projects with detectable change in human activity
+
+data analysis:
+amount and timing of animal activity
+
+model for single species detection: neg binomial, offset for camera days, random intercept for camera locations
+glmmTMB used in R
+
+timing:
+detection classified as day/night using UTC -> sun angles
+
+nocturnality index: detenctions duting night / all detections; for all species which had at least 10 observations in treat and control
+log risk ratio RR: ln(observation high human activity / obs low human) -> positive: more nocturnality with increasing human activity
+
+
+
+
+
+
+
+
+
+
+
+
+
+
