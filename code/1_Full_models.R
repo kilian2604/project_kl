@@ -1,3 +1,8 @@
+install.packages("metafor")
+install.packages("dplyr")
+install.packages("corrplot")
+install.packages("MuMIn")
+
 library(metafor)
 library(dplyr)
 library(corrplot)
