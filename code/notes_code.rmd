@@ -1,0 +1,35 @@
+---
+output: reprex::reprex_document
+knit: reprex::reprex_render
+---
+
+Describe your issue very briefly here. Then show it with a minimal, self-contained example in the following R chunk.
+
+```{r}
+
+library(dplyr)
+library(ggplot2)
+data_paper <- read.csv("data/rai_with_covariates.csv", sep = ",")
+data_combine <- read.csv("data/COMBINE_data/trait_data_imputed.csv")
+
+
+
+data_paper <- data_paper %>%
+  left_join(data_combine %>% select(iucn2020_binomial, adult_mass_g), by = c("Species" = "iucn2020_binomial"))
+
+data_paper$weight_kg <- as.integer(data_paper$adult_mass_g / 1000)
+
+# Remove outliers from adult_mass_g
+Q1 <- quantile(data_paper$weight_kg, 0.25, na.rm = TRUE)
+Q3 <- quantile(data_paper$weight_kg, 0.75, na.rm = TRUE)
+IQR <- Q3 - Q1
+lower_bound <- Q1 - 1.5 * IQR
+upper_bound <- Q3 + 1.5 * IQR
+
+data_combine_filtered <- data_paper %>%
+  filter(weight_kg >= lower_bound & weight_kg <= upper_bound)
+
+# Plot the distribution of adult_mass_g without outliers
+ggplot(data_paper, aes(x = weight_kg)) +
+  geom_histogram(binwidth = 10, fill = "blue", color = "black") 
+```
