@@ -3,7 +3,86 @@ output: reprex::reprex_document
 knit: reprex::reprex_render
 ---
 
-Describe your issue very briefly here. Then show it with a minimal, self-contained example in the following R chunk.
+
+# import libraries
+```{r}
+library(dplyr)
+```
+# Import data
+```{r}
+rai <- read.csv("data/rai_with_covariates.csv")
+noc <- read.csv("data/noct_with_covariates.csv")
+project_cov <- read.csv("data/project_covariates.csv")
+combine <- read.csv("data/COMBINE_data/trait_data_imputed.csv")
+
+
+# reduce the data of combine to match the porjects data
+combine_filtered <- combine %>%
+  semi_join(rai, by = c("iucn2020_binomial" = "Species"))
+
+# how many species in project?
+n_distinct(rai$Species) #163
+
+#found: 160
+nrow(combine_filtered)
+
+#which are not included?
+species_not_in_combine <- rai %>%
+  anti_join(combine, by = c("Species" = "iucn2020_binomial"))
+
+unique_species_not_in_combine <- unique(species_not_in_combine$Species)
+print(unique_species_not_in_combine)
+
+```
+
+# Calculation of relative brain size
+To calculate relative brain size we divided log-transformed brain mass by log-transformed body mass
+```{r}
+species_df <- data.frame(
+  species_iucn = combine$iucn2020_binomial,
+  species_phylacine = combine$phylacine_binomial, 
+  adult_mass_g = combine$adult_mass_g,
+  brain_mass_g = combine$brain_mass_g
+)
+
+species_df$log_mass <- log(species_df$adult_mass_g)
+species_df$log_brain <- log(species_df$brain_mass_g)
+species_df$rel_br_size <- (species_df$log_brain / rel_br_size_df$log_mass)
+
+# reduce data to match the data in project but three
+species_df <- species_df %>%
+  semi_join(rai, by = c("species_iucn" = "Species"))
+
+# Ensure there are no duplicate species in rai
+rai_unique <- rai %>%
+  distinct(Species, .keep_all = TRUE)
+
+# Add column with original data
+species_df <- species_df %>%
+  left_join(rai_unique %>% select(Species, brain_mass_relative), by = c("species_iucn" = "Species"))
+
+#THIS WORKS
+
+# create three equal sized groups by mass
+species_df <- species_df %>%
+  mutate(mass_group = ntile(adult_mass_g, 3))
+
+break_values <- quantile(species_df$mass_kg, probs = seq(0, 1, length.out = 4))
+break_values
+
+median(species_df$adult_mass_g) #is roughly 11 kg
+
+# plot the distribution of mass of projects
+species_df$mass_kg <- species_df$adult_mass_g / 1000
+hist(
+  species_df$mass_kg, 
+  breaks = seq(0, max(species_df$mass_kg, by = 20)),
+  probability = FALSE) # to ensure absolute values
+
+
+```
+
+
 
 ```{r}
 
@@ -27,8 +106,10 @@ lower_bound <- Q1 - 1.5 * IQR
 upper_bound <- Q3 + 1.5 * IQR
 
 data_combine_filtered <- data_paper %>%
-  filter(weight_kg >= lower_bound & weight_kg <= upper_bound)
-
+  filter(weight_kg >= lower_bound & weight_kg <= upper_bound)```{r}
+  
+  ```
+```{r}
 # Plot the distribution of adult_mass_g without outliers
 ggplot(data_paper, aes(x = weight_kg)) +
   geom_histogram(binwidth = 10, fill = "blue", color = "black") 

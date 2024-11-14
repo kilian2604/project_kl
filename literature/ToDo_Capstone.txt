@@ -1,0 +1,9 @@
+ToDo Capstone
+
+- Modellaufbau verstehen, Varianz, yi/vi
+- relativen Werte verstehen (human, brain size)
+- brain mass index nachrechnen
+- Gewichtsklassen hinterfragen
+- figure 1 und 2 checken
+- code durchlaufen lassen und kommentieren
+- zusammenfassen: Fragestellung + Ergebnisse

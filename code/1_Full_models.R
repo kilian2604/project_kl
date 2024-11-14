@@ -29,6 +29,7 @@ rai_noSame$foraging_stratum <- as.factor(rai_noSame$foraging_stratum)
 rai_noSame$trophic_groups <- as.factor(rai_noSame$trophic_groups)
 
 # Reference level - large herbivore
+# das Referenzlevel wird auf large herbivore gesetzt
 rai_noSame$trophic_groups <- relevel(rai_noSame$trophic_groups, "large_herbivore")
 
 # 95% CI summary data
