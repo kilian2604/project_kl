@@ -106,9 +106,9 @@ lower_bound <- Q1 - 1.5 * IQR
 upper_bound <- Q3 + 1.5 * IQR
 
 data_combine_filtered <- data_paper %>%
-  filter(weight_kg >= lower_bound & weight_kg <= upper_bound)```{r}
+  filter(weight_kg >= lower_bound & weight_kg <= upper_bound)
   
-  ```
+```
 ```{r}
 # Plot the distribution of adult_mass_g without outliers
 ggplot(data_paper, aes(x = weight_kg)) +

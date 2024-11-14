@@ -19,7 +19,7 @@ length(unique(rai_noSame$Species))
 length(unique(paste(rai_noSame$Species, rai_noSame$Project.ID))) 
 
 # Data preparation
-# Set factors and specify reference level 
+# Set factors and specify reference level - all factors, categorial variables
 rai_noSame$Treatment_Activity_NoSame <- as.factor(rai_noSame$Treatment_Activity_NoSame)
 rai_noSame$Habitat_closure <- as.factor(rai_noSame$Habitat_closure)
 rai_noSame$family <- as.factor(rai_noSame$family)
@@ -41,7 +41,7 @@ rai_noSame %>%
          lower.ci.yi = mean.yi - qt(1 - (0.05 / 2), n.yi - 1) * se.yi,
          upper.ci.yi = mean.yi + qt(1 - (0.05 / 2), n.yi - 1) * se.yi)
 
-#####################
+##################### test te ste 
 # Models
 
 #####################################
