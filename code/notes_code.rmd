@@ -10,12 +10,21 @@ library(dplyr)
 ```
 # Import data
 ```{r}
-rai <- read.csv("data/rai_with_covariates.csv")
-noc <- read.csv("data/noct_with_covariates.csv")
-project_cov <- read.csv("data/project_covariates.csv")
-combine <- read.csv("data/COMBINE_data/trait_data_imputed.csv")
+rai <- read.csv("../data/rai_with_covariates.csv")
+noc <- read.csv("../data/noct_with_covariates.csv")
+project_cov <- read.csv("../data/project_covariates.csv")
+combine <- read.csv("../data/COMBINE_data/trait_data_imputed.csv")
+```
+
+# Variables
+Dietary breadth: Dietary breadth can be used as an indicator of the number of different food elements a species consumes. Estimated as the number of different EltonTraits categories that constitute ≥20% of a species’ diet (Usui et al. 2017).
+
+Habitat breadth: Habitat breadth can be used as an indicator of a species’ environmental tolerance. Estimated as the number of distinct level 1 IUCN habitats suitable for the species.
 
 
+
+
+```{r}
 # reduce the data of combine to match the porjects data
 combine_filtered <- combine %>%
   semi_join(rai, by = c("iucn2020_binomial" = "Species"))
@@ -82,6 +91,14 @@ hist(
 
 ```
 
+# Whats the variance in rai? - lets check on one example
+```{r}
+rai_test <- rai %>%
+  filter(Species == "Alces alces")
+
+median(rai_test$yi_mod_lowhigh)
+
+```
 
 
 ```{r}
